@@ -234,4 +234,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - FastAPI for the excellent web framework
 - Next.js for the React framework
 - SQLModel for the ORM
-- The open-source community for countless tools and libraries that made this project possible.
+- The open-source community for countless tools and libraries that made this project possible.# evolution-of-todo-hackathon
