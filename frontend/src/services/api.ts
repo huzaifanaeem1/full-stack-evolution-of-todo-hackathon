@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
-import { Task, TaskCreate, TaskUpdate, TaskPatch, User, UserCreate, UserLogin } from '../types';
+import { Task, TaskCreate, TaskUpdate, TaskPatch, User, UserCreate, UserLogin } from '@/src/types';
 import { getAuthToken, isAuthenticated } from './auth';
 
 // Base API client with default configuration

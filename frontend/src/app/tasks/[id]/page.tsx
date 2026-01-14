@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Task } from '../../types/index';
-import { TaskItem } from '../../components/TaskItem';
-import { taskAPI } from '../../services/api';
-import { isAuthenticated, getUserId } from '../../services/auth';
+import { Task } from '@/src/types';
+import { TaskItem } from '@/src/components/TaskItem';
+import { taskAPI } from '@/src/services/api';
+import { isAuthenticated, getUserId } from '@/src/services/auth';
 
 export default function TaskDetailPage() {
   const { id } = useParams<{ id: string }>();

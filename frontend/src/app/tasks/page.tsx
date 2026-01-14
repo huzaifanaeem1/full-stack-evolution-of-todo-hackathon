@@ -3,11 +3,11 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Task } from '../types/index';
-import { TaskList } from '../components/TaskList';
-import { TaskForm } from '../components/TaskForm';
-import { taskAPI } from '../services/api';
-import { isAuthenticated, getUserId } from '../services/auth';
+import { Task } from '@/src/types';
+import { TaskList } from '@/src/components/TaskList';
+import { TaskForm } from '@/src/components/TaskForm';
+import { taskAPI } from '@/src/services/api';
+import { isAuthenticated, getUserId } from '@/src/services/auth';
 
 export default function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
