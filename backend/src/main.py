@@ -35,9 +35,16 @@ app = FastAPI(
 )
 
 # Add CORS middleware
+# Get allowed origins from environment variable, with defaults for local development
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:3001").split(",")
+# Add the Vercel production origin if not already present
+vercel_origin = "https://full-stack-evolution-of-todo-hackat.vercel.app"
+if vercel_origin not in allowed_origins:
+    allowed_origins.append(vercel_origin)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],  # Allow frontend origins
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],  # Allow these methods including PATCH
     allow_headers=["*"],  # Allow all headers including Authorization and Content-Type
