@@ -18,6 +18,27 @@ elif DATABASE_URL.startswith("postgres://"):  # Some services use postgres:// in
     # Replace postgres:// with postgresql+asyncpg:// to ensure async driver
     DATABASE_URL = "postgresql+asyncpg://" + DATABASE_URL[11:]  # 11 is len("postgres://")
 
+# For asyncpg, some query parameters like sslmode need to be handled differently
+# Remove problematic query parameters that asyncpg doesn't support directly
+if DATABASE_URL.startswith("postgresql+asyncpg://") and "?" in DATABASE_URL:
+    base_url, query_params = DATABASE_URL.split("?", 1)
+    # Parse query parameters and keep only those that are compatible with asyncpg
+    params = {}
+    for param in query_params.split("&"):
+        if "=" in param:
+            key, value = param.split("=", 1)
+            # asyncpg handles SSL differently, so we'll remove sslmode and channel_binding
+            # since they're not expected as direct connect() arguments
+            if key not in ["sslmode", "channel_binding"]:
+                params[key] = value
+
+    # Reconstruct URL without problematic parameters
+    if params:
+        new_query = "&".join([f"{k}={v}" for k, v in params.items()])
+        DATABASE_URL = f"{base_url}?{new_query}"
+    else:
+        DATABASE_URL = base_url
+
 # Create async engine for PostgreSQL
 async_engine = create_async_engine(DATABASE_URL)
 
