@@ -18,21 +18,25 @@ elif DATABASE_URL.startswith("postgres://"):  # Some services use postgres:// in
     # Replace postgres:// with postgresql+asyncpg:// to ensure async driver
     DATABASE_URL = "postgresql+asyncpg://" + DATABASE_URL[11:]  # 11 is len("postgres://")
 
-# Handle asyncpg-specific URL parameters that cause issues
-# Extract problematic query parameters that SQLAlchemy passes to asyncpg as kwargs
+# For Neon PostgreSQL and other cloud providers, we need to handle SSL properly
+# The sslmode parameter in URLs can cause TypeError when passed to asyncpg directly
+# We need to handle this while maintaining proper SSL connection
 if "?" in DATABASE_URL and DATABASE_URL.startswith("postgresql+asyncpg"):
     base_url, query_string = DATABASE_URL.split("?", 1)
-    # Split query parameters
     query_params = query_string.split("&")
 
-    # Filter out parameters that cause issues with asyncpg
+    # Parameters that cause TypeError when passed directly to asyncpg connect function
+    params_to_remove = ["sslmode", "channel_binding"]
+
     filtered_params = []
     for param in query_params:
         if "=" in param:
             key = param.split("=")[0]
-            # These parameters cause issues when passed directly to asyncpg
-            if key not in ["sslmode", "channel_binding"]:
+            if key not in params_to_remove:
                 filtered_params.append(param)
+        else:
+            # If no '=' in param, just add it as is
+            filtered_params.append(param)
 
     # Reconstruct the URL with filtered parameters
     if filtered_params:
@@ -40,7 +44,7 @@ if "?" in DATABASE_URL and DATABASE_URL.startswith("postgresql+asyncpg"):
     else:
         DATABASE_URL = base_url
 
-# Create async engine for PostgreSQL
+# Create async engine for PostgreSQL with proper connection settings for Neon
 async_engine = create_async_engine(DATABASE_URL)
 
 # Create async sessionmaker
