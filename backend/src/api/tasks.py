@@ -2,7 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel.ext.asyncio.session import AsyncSession
 from typing import Annotated, List
 from uuid import UUID
-from ..models.task import Task, TaskCreate, TaskRead, TaskUpdate, TaskPatch
+from pydantic import BaseModel
+from ..models.task import Task, TaskCreate, TaskRead, TaskUpdate
 from ..models.user import User
 from ..services.task_service import (
     create_task_for_user,
@@ -14,6 +15,10 @@ from ..services.task_service import (
 )
 from ..services.auth import get_current_user
 from ..config.database import get_db_session as get_async_db_session
+
+
+class TaskPatch(BaseModel):
+    completed: bool
 
 tasks_router = APIRouter(prefix="/{user_id}/tasks", tags=["tasks"])
 
@@ -122,7 +127,7 @@ async def update_task_completion(
             detail="Access denied - cannot update another user's task"
         )
 
-    task = await patch_task_completion_status(id, task_patch, user_id, db)
+    task = await patch_task_completion_status(id, task_patch.completed, user_id, db)
     if not task:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

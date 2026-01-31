@@ -10,7 +10,7 @@ from ..services.auth import (
     get_user_by_email,
     get_current_user
 )
-from ..config.database import get_db_session as get_async_db_session
+from ..config.database import get_db_session
 from datetime import timedelta
 
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
@@ -18,7 +18,7 @@ auth_router = APIRouter(prefix="/auth", tags=["auth"])
 @auth_router.post("/register", response_model=UserRead)
 async def register(
     user_data: UserCreate,
-    db: Annotated[AsyncSession, Depends(get_async_db_session)]
+    db: Annotated[AsyncSession, Depends(get_db_session)]
 ):
     """Register a new user account"""
     # Check if user already exists
@@ -37,7 +37,7 @@ async def register(
 @auth_router.post("/login")
 async def login(
     user_credentials: UserLogin,
-    db: Annotated[AsyncSession, Depends(get_async_db_session)]
+    db: Annotated[AsyncSession, Depends(get_db_session)]
 ):
     """Authenticate user and return JWT token"""
     user = await authenticate_user(db, user_credentials.email, user_credentials.password)

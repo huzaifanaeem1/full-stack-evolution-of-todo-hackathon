@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Task } from '@/src/types';
-import { taskAPI } from '@/src/services/api';
-import { getUserId } from '@/src/services/auth';
+import { Task } from '@/types';
+import { taskAPI } from '@/services/api';
+import { getUserId } from '@/services/auth';
 
 interface TaskFormProps {
   onTaskCreated: (task: Task) => void;
@@ -35,9 +35,11 @@ export const TaskForm = ({ onTaskCreated }: TaskFormProps) => {
       const newTask = await taskAPI.createTask(userId, {
         title: title.trim(),
         description: description.trim(),
+        user_id: userId,  // Include user_id as required by the backend API
+        priority: 3,      // Default to medium priority (3)
       });
 
-      // Optimistic update - immediately update UI with new task
+      // Only trigger refetch to ensure state consistency
       onTaskCreated(newTask);
 
       // Reset form

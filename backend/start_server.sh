@@ -5,7 +5,7 @@
 cd /mnt/d/evolution-of-todo/backend
 
 # Activate virtual environment
-source venv/bin/activate
+source venv_new/bin/activate
 
 # Start the backend server
 uvicorn src.main:app --reload --port 8000
