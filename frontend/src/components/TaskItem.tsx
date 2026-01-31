@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Task } from '@/src/types';
-import { taskAPI } from '@/src/services/api';
-import { getUserId } from '@/src/services/auth';
+import { Task } from '@/types';
+import { taskAPI } from '@/services/api';
+import { getUserId } from '@/services/auth';
 
 interface TaskItemProps {
   task: Task;
@@ -11,7 +11,7 @@ interface TaskItemProps {
   onTaskDeleted: (taskId: string) => void;
 }
 
-export const TaskItem = ({ task, onTaskUpdated, onTaskDeleted }: TaskItemProps) => {
+export const TaskItem = ({ task, onTaskUpdated, onTaskDeleted, triggerDelete }: TaskItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description || '');
@@ -26,12 +26,12 @@ export const TaskItem = ({ task, onTaskUpdated, onTaskDeleted }: TaskItemProps) 
         throw new Error('User not authenticated');
       }
 
-      const updatedTask = await taskAPI.patchTaskCompletion(userId, task.id, {
-        is_completed: !task.is_completed
+      await taskAPI.patchTaskCompletion(userId, task.id, {
+        completed: !task.completed
       });
 
-      // Optimistic update - immediately update UI with toggled status
-      onTaskUpdated(updatedTask);
+      // Only trigger refetch to ensure state consistency
+      onTaskUpdated(task);
     } catch (err: any) {
       setError(err.response?.data?.detail || err.message || 'Failed to update task');
     } finally {
@@ -56,14 +56,14 @@ export const TaskItem = ({ task, onTaskUpdated, onTaskDeleted }: TaskItemProps) 
         throw new Error('User not authenticated');
       }
 
-      const updatedTask = await taskAPI.updateTask(userId, task.id, {
+      await taskAPI.updateTask(userId, task.id, {
         title: title.trim(),
         description: description.trim(),
-        is_completed: task.is_completed
+        completed: task.completed
       });
 
-      // Optimistic update - immediately update UI with new task
-      onTaskUpdated(updatedTask);
+      // Only trigger refetch to ensure state consistency
+      onTaskUpdated(task);
       setIsEditing(false);
     } catch (err: any) {
       setError(err.response?.data?.detail || err.message || 'Failed to update task');
@@ -86,7 +86,7 @@ export const TaskItem = ({ task, onTaskUpdated, onTaskDeleted }: TaskItemProps) 
 
       await taskAPI.deleteTask(userId, task.id);
 
-      // Optimistic update - immediately remove task from UI
+      // Remove task from UI and refetch to ensure state consistency
       onTaskDeleted(task.id);
     } catch (err: any) {
       setError(err.response?.data?.detail || err.message || 'Failed to delete task');
@@ -169,7 +169,7 @@ export const TaskItem = ({ task, onTaskUpdated, onTaskDeleted }: TaskItemProps) 
 
   return (
     <div className={`border border-purple-500/20 rounded-xl p-5 mb-4 transition-all duration-200 ${
-      task.is_completed
+      task.completed
         ? 'bg-gradient-to-r from-green-900/20 to-emerald-900/20 border-green-500/30'
         : 'bg-gradient-to-br from-purple-900/5 to-black/20 backdrop-blur-sm'
     }`}>
@@ -177,7 +177,7 @@ export const TaskItem = ({ task, onTaskUpdated, onTaskDeleted }: TaskItemProps) 
         <div className="flex items-center h-5">
           <input
             type="checkbox"
-            checked={task.is_completed}
+            checked={task.completed}
             onChange={handleToggleComplete}
             disabled={loading}
             className="h-5 w-5 text-purple-600 rounded focus:ring-purple-500 bg-black/30 border-purple-500/30"
@@ -186,7 +186,7 @@ export const TaskItem = ({ task, onTaskUpdated, onTaskDeleted }: TaskItemProps) 
 
         <div className="flex-1 min-w-0 ml-4">
           <h3 className={`text-lg font-semibold ${
-            task.is_completed
+            task.completed
               ? 'line-through text-gray-400'
               : 'text-white'
           }`}>
@@ -195,7 +195,7 @@ export const TaskItem = ({ task, onTaskUpdated, onTaskDeleted }: TaskItemProps) 
 
           {task.description && (
             <p className={`mt-2 text-gray-400 ${
-              task.is_completed ? 'line-through' : ''
+              task.completed ? 'line-through' : ''
             }`}>
               {task.description}
             </p>
@@ -216,7 +216,7 @@ export const TaskItem = ({ task, onTaskUpdated, onTaskDeleted }: TaskItemProps) 
                 Updated: {formatDate(task.updated_at)}
               </span>
             )}
-            {task.is_completed && (
+            {task.completed && (
               <span className="flex items-center text-green-400">
                 <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />

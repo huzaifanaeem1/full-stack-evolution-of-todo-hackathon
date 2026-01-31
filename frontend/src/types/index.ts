@@ -2,8 +2,11 @@ export interface Task {
   id: string;
   title: string;
   description?: string;
-  is_completed: boolean;
+  completed: boolean;
   user_id: string;
+  priority?: number;
+  category?: string;
+  due_date?: string;
   created_at: string;
   updated_at: string;
 }
@@ -18,17 +21,24 @@ export interface User {
 export interface TaskCreate {
   title: string;
   description?: string;
-  is_completed?: boolean;
+  completed?: boolean;
+  priority?: number;
+  category?: string;
+  due_date?: string;
+  user_id: string;
 }
 
 export interface TaskUpdate {
   title?: string;
   description?: string;
-  is_completed?: boolean;
+  completed?: boolean;
+  priority?: number;
+  category?: string;
+  due_date?: string;
 }
 
 export interface TaskPatch {
-  is_completed?: boolean;
+  completed?: boolean;
 }
 
 export interface UserCreate {

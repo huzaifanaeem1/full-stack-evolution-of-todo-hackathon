@@ -1,5 +1,6 @@
 from sqlmodel import create_engine
 from sqlmodel.ext.asyncio.session import AsyncSession
+from sqlalchemy import create_engine as create_sync_engine
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from contextlib import asynccontextmanager
 import os
@@ -59,12 +60,34 @@ if DATABASE_URL.startswith("postgresql+asyncpg://"):
             }
         }
     )
+elif DATABASE_URL.startswith("sqlite+aiosqlite://"):
+    # Handle SQLite async engine creation
+    async_engine = create_async_engine(
+        DATABASE_URL,
+        pool_pre_ping=True,  # Verify connections before use
+        pool_recycle=300,    # Recycle connections every 5 minutes
+        # SQLite-specific settings
+        connect_args={
+            "check_same_thread": False  # Allow multiple threads to access the database
+        }
+    )
 else:
     async_engine = create_async_engine(
         DATABASE_URL,
         pool_pre_ping=True,  # Verify connections before use (helpful for serverless DBs)
         pool_recycle=300,    # Recycle connections every 5 minutes
     )
+
+# Create sync engine for synchronous operations
+if DATABASE_URL.startswith("postgresql+asyncpg://"):
+    # Replace with sync driver for synchronous operations
+    sync_db_url = DATABASE_URL.replace("postgresql+asyncpg://", "postgresql://")
+    engine = create_sync_engine(sync_db_url, pool_pre_ping=True, pool_recycle=300)
+elif DATABASE_URL.startswith("sqlite+aiosqlite://"):
+    # Handle SQLite sync engine creation
+    engine = create_sync_engine(DATABASE_URL, pool_pre_ping=True, pool_recycle=300, connect_args={"check_same_thread": False})
+else:
+    engine = create_sync_engine(DATABASE_URL, pool_pre_ping=True, pool_recycle=300)
 
 # Create async sessionmaker
 async_session = async_sessionmaker(async_engine, class_=AsyncSession, expire_on_commit=False)

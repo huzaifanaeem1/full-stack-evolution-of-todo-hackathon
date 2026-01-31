@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from .api.auth import auth_router
 from .api.tasks import tasks_router
+from .api.chat import router as chat_router
 from .config.database import async_engine
 from sqlmodel import SQLModel
 from dotenv import load_dotenv
@@ -34,17 +35,23 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# Add CORS middleware
+# Add CORS middleware - being careful about origin processing
 # Get allowed origins from environment variable, with defaults for local development
-allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:3001").split(",")
+allowed_origins_raw = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:3001")  # Using the same name as in .env.example
+# Split and strip whitespace from each origin
+allowed_origins_list = [origin.strip() for origin in allowed_origins_raw.split(",") if origin.strip()]
 # Add the Vercel production origin if not already present
 vercel_origin = "https://full-stack-evolution-of-todo-hackat.vercel.app"
-if vercel_origin not in allowed_origins:
-    allowed_origins.append(vercel_origin)
+if vercel_origin not in allowed_origins_list:
+    allowed_origins_list.append(vercel_origin)
+
+# Ensure we have at least the basic local origins if environment variable is empty
+if not allowed_origins_list:
+    allowed_origins_list = ["http://localhost:3000", "http://localhost:3001"]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
+    allow_origins=allowed_origins_list,
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],  # Allow these methods including PATCH
     allow_headers=["*"],  # Allow all headers including Authorization and Content-Type
@@ -53,6 +60,7 @@ app.add_middleware(
 # Include API routers
 app.include_router(auth_router, prefix="/api")
 app.include_router(tasks_router, prefix="/api")
+app.include_router(chat_router, prefix="/api")
 
 @app.get("/")
 def read_root():

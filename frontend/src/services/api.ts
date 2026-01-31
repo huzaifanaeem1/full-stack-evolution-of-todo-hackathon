@@ -94,7 +94,7 @@ export const authAPI = {
 export const taskAPI = {
   getTasks: async (userId: string): Promise<Task[]> => {
     try {
-      const response = await apiClient.get(`/${userId}/tasks`);
+      const response = await apiClient.get(`/${userId}/tasks/`);
       return response.data;
     } catch (error: any) {
       throw new Error(error.response?.data?.detail || error.message || 'Failed to fetch tasks');
@@ -103,7 +103,7 @@ export const taskAPI = {
 
   createTask: async (userId: string, taskData: TaskCreate): Promise<Task> => {
     try {
-      const response = await apiClient.post(`/${userId}/tasks`, taskData);
+      const response = await apiClient.post(`/${userId}/tasks/`, taskData);
       return response.data;
     } catch (error: any) {
       throw new Error(error.response?.data?.detail || error.message || 'Failed to create task');

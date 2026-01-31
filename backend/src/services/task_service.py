@@ -3,7 +3,7 @@ from sqlalchemy.exc import IntegrityError
 from fastapi import HTTPException, status
 from typing import List, Optional
 from uuid import UUID
-from ..models.task import Task, TaskCreate, TaskUpdate, TaskPatch
+from ..models.task import Task, TaskCreate, TaskUpdate
 
 
 async def create_task_for_user(task_data: TaskCreate, user_id: UUID, db) -> Task:
@@ -12,7 +12,7 @@ async def create_task_for_user(task_data: TaskCreate, user_id: UUID, db) -> Task
     db_task = Task(
         title=task_data.title,
         description=task_data.description,
-        is_completed=task_data.is_completed,
+        completed=task_data.completed,
         user_id=user_id
     )
 
@@ -73,7 +73,7 @@ async def update_task_by_id_and_user(task_id: UUID, task_data: TaskUpdate, user_
         )
 
 
-async def patch_task_completion_status(task_id: UUID, task_patch: TaskPatch, user_id: UUID, db) -> Optional[Task]:
+async def patch_task_completion_status(task_id: UUID, is_completed: bool, user_id: UUID, db) -> Optional[Task]:
     """Update task completion status by ID for a specific user"""
     # Get the existing task
     statement = select(Task).where(Task.id == task_id, Task.user_id == user_id)
@@ -84,7 +84,7 @@ async def patch_task_completion_status(task_id: UUID, task_patch: TaskPatch, use
         return None
 
     # Update the completion status
-    task.is_completed = task_patch.is_completed
+    task.completed = is_completed
 
     try:
         await db.commit()

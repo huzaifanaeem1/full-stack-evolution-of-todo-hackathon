@@ -1,0 +1,38 @@
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://10.255.255.254:3000
+- Environments: .env.local
+
+✓ Starting...
+✓ Ready in 17.1s
+○ Compiling / ...
+ GET / 200 in 13.5s (compile: 12.7s, render: 793ms)
+ GET / 200 in 137ms (compile: 47ms, render: 90ms)
+ GET /login 200 in 301ms (compile: 243ms, render: 58ms)
+ GET /tasks 200 in 862ms (compile: 799ms, render: 63ms)
+ GET /tasks 200 in 356ms (compile: 100ms, render: 256ms)
+ GET / 200 in 89ms (compile: 41ms, render: 48ms)
+ GET /tasks 200 in 104ms (compile: 52ms, render: 52ms)
+ GET /tasks 200 in 147ms (compile: 56ms, render: 91ms)
+ GET /login 200 in 141ms (compile: 60ms, render: 82ms)
+ GET /login 200 in 212ms (compile: 44ms, render: 168ms)
+ GET /login 200 in 187ms (compile: 53ms, render: 134ms)
+ GET /tasks 200 in 129ms (compile: 44ms, render: 84ms)
+ GET / 200 in 149ms (compile: 47ms, render: 102ms)
+ GET /tasks 200 in 109ms (compile: 48ms, render: 61ms)
+ GET /tasks 200 in 103ms (compile: 51ms, render: 52ms)
+ GET /tasks 200 in 88ms (compile: 43ms, render: 45ms)
+ GET / 200 in 193ms (compile: 64ms, render: 128ms)
+ GET /tasks 200 in 109ms (compile: 50ms, render: 59ms)
+ POST /api/chat/test_user_id 404 in 1751ms (compile: 1430ms, render: 321ms)
+ GET / 200 in 191ms (compile: 71ms, render: 121ms)
+ GET / 200 in 127ms (compile: 33ms, render: 94ms)
+ GET /login 200 in 128ms (compile: 58ms, render: 71ms)
+ GET /tasks 200 in 147ms (compile: 64ms, render: 83ms)
+ GET / 200 in 586ms (compile: 235ms, render: 350ms)
+ GET /login 200 in 154ms (compile: 69ms, render: 85ms)
+ GET /tasks 200 in 146ms (compile: 65ms, render: 82ms)
+ GET / 200 in 287ms (compile: 88ms, render: 199ms)
+ GET / 200 in 84ms (compile: 21ms, render: 63ms)
+ GET /tasks 200 in 76ms (compile: 37ms, render: 39ms)
+ GET /tasks 200 in 156ms (compile: 60ms, render: 96ms)

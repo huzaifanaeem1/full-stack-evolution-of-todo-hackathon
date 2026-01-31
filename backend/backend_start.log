@@ -1,0 +1,53 @@
+INFO:     Started server process [1473]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+Initializing database...
+Database initialized.
+INFO:     127.0.0.1:37824 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44212 - "POST /api/auth/register HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44226 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49460 - "POST /api/chat/696906b8-4e53-4f24-8cae-08b3bec66129 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55704 - "POST /api/chat/696906b8-4e53-4f24-8cae-08b3bec66129 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55632 - "GET /api/696906b8-4e53-4f24-8cae-08b3bec66129/tasks HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:55632 - "GET /api/696906b8-4e53-4f24-8cae-08b3bec66129/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48318 - "POST /api/auth/register HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34388 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34402 - "POST /api/chat/b298576e-4d80-4356-991e-d57a7839ba51 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34404 - "GET /api/b298576e-4d80-4356-991e-d57a7839ba51/tasks HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:34404 - "GET /api/b298576e-4d80-4356-991e-d57a7839ba51/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35746 - "OPTIONS /api/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35746 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35746 - "OPTIONS /api/75316307-443d-4bac-8dfd-774c3fef39e2/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35754 - "OPTIONS /api/75316307-443d-4bac-8dfd-774c3fef39e2/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35754 - "GET /api/75316307-443d-4bac-8dfd-774c3fef39e2/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35754 - "GET /api/75316307-443d-4bac-8dfd-774c3fef39e2/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35766 - "OPTIONS /api/api/chat/75316307-443d-4bac-8dfd-774c3fef39e2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35766 - "POST /api/api/chat/75316307-443d-4bac-8dfd-774c3fef39e2 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52734 - "POST /api/api/chat/75316307-443d-4bac-8dfd-774c3fef39e2 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57928 - "OPTIONS /api/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57928 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57928 - "OPTIONS /api/75316307-443d-4bac-8dfd-774c3fef39e2/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52144 - "OPTIONS /api/75316307-443d-4bac-8dfd-774c3fef39e2/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57928 - "GET /api/75316307-443d-4bac-8dfd-774c3fef39e2/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57928 - "GET /api/75316307-443d-4bac-8dfd-774c3fef39e2/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52156 - "OPTIONS /api/75316307-443d-4bac-8dfd-774c3fef39e2/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52156 - "POST /api/75316307-443d-4bac-8dfd-774c3fef39e2/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52170 - "OPTIONS /api/api/chat/75316307-443d-4bac-8dfd-774c3fef39e2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52170 - "POST /api/api/chat/75316307-443d-4bac-8dfd-774c3fef39e2 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:39396 - "POST /api/api/chat/75316307-443d-4bac-8dfd-774c3fef39e2 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:43236 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50680 - "OPTIONS /api/75316307-443d-4bac-8dfd-774c3fef39e2/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50682 - "OPTIONS /api/75316307-443d-4bac-8dfd-774c3fef39e2/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50680 - "GET /api/75316307-443d-4bac-8dfd-774c3fef39e2/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50680 - "GET /api/75316307-443d-4bac-8dfd-774c3fef39e2/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50680 - "OPTIONS /api/75316307-443d-4bac-8dfd-774c3fef39e2/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50682 - "POST /api/75316307-443d-4bac-8dfd-774c3fef39e2/tasks/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48504 - "POST /api/auth/register HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48514 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48524 - "POST /api/chat/338dc1a5-9cd6-457d-af6d-d6a4931e104a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48534 - "POST /api/chat/338dc1a5-9cd6-457d-af6d-d6a4931e104a HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1473]

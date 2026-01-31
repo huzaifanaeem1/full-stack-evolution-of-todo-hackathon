@@ -1,7 +1,7 @@
 <!-- SYNC IMPACT REPORT:
-Version change: N/A -> 1.0.0
-Modified principles: None (new constitution)
-Added sections: All sections (new constitution)
+Version change: 1.1.0 -> 1.2.0
+Modified principles: No AI Features in Phase II updated to reflect removal of AI chatbot functionality
+Added sections: None
 Removed sections: None
 Templates requiring updates:
 - .specify/templates/plan-template.md: ✅ updated
@@ -28,7 +28,7 @@ Phase I (CLI) and Phase II (Full-Stack Web App) are completely separate implemen
 Backend and frontend must be developed as separate deployable services; Clear API contracts define communication between services; Each service has independent scaling and deployment capabilities.
 
 ### Mandatory Authentication
-Every endpoint and feature must require user authentication; No anonymous access allowed except health/status endpoints; Authentication must be implemented using Better Auth (JWT-based).
+Every endpoint and feature must require user authentication; No anonymous access allowed except health/status endpoints; Authentication must be implemented using JWT-based authentication.
 
 ### User-Isolated Data Access
 Users can only access their own data; No cross-user data visibility or manipulation allowed; All database queries must include user-id filters for security.
@@ -44,11 +44,11 @@ Backend services must be built using FastAPI framework; Python type hints utiliz
 ### ORM: SQLModel
 Database operations must use SQLModel ORM; Models must inherit from SQLModel's base classes; Proper relationship definitions and foreign key constraints enforced.
 
-### Database: Neon Serverless PostgreSQL
-Database layer must use Neon Serverless PostgreSQL; Connection pooling and optimization for serverless environments; Proper schema migrations and versioning.
+### Database: Neon Serverless PostgreSQL with Local Flexibility
+Database layer must use Neon Serverless PostgreSQL for production deployments; For local development, SQLite is acceptable to simplify setup and reduce dependencies; Connection pooling and optimization for serverless environments in production; Proper schema migrations and versioning across both database types.
 
-### Authentication: Better Auth (JWT-based)
-Authentication system must use Better Auth library; JWT tokens for session management; Consistent JWT secret shared between frontend and backend via environment variables.
+### Authentication: JWT-Based Authentication
+Authentication system must use JWT-based authentication with proper token validation; JWT tokens for session management; Consistent JWT secret shared between frontend and backend via environment variables.
 
 ### API: REST Only
 API endpoints must follow RESTful conventions; No GraphQL, gRPC, or other protocols allowed; Standard HTTP methods and status codes.
@@ -69,8 +69,8 @@ JWT secret must be shared via environment variables only; No hardcoded secrets i
 
 ## Non-Negotiable Constraints
 
-### No AI Features in Phase II
-No artificial intelligence capabilities in Phase II implementation; AI features reserved for future phases only; Current scope limited to core todo functionality.
+### No AI Features in Current Implementation
+No artificial intelligence capabilities in the current implementation; Any AI features that existed have been removed; Current scope limited to core todo functionality; AI features may be considered for future phases only after proper planning and approval.
 
 ### No UI Overengineering
 Simple, functional UI design prioritized over complex interfaces; Minimal styling and components; Focus on core functionality over visual enhancements.
@@ -80,6 +80,14 @@ Implementation restricted to requirements specified in the constitution; No addi
 
 ### Consistent JWT Secret Sharing
 Same JWT secret must be used across frontend and backend; Secure transmission and storage of the secret; Proper environment configuration for both services.
+
+## Local Development Flexibility
+
+### Development Database Options
+Production deployments must use Neon Serverless PostgreSQL; For local development, SQLite is permitted to reduce setup complexity and dependencies; Database abstraction through SQLModel ensures compatibility across both database systems; Migration scripts must support both PostgreSQL and SQLite dialects.
+
+### Development Server Configuration
+Backend server must be configurable to run on different ports for local development; Frontend must properly proxy API requests to backend during development; CORS configuration must allow localhost origins for development environments.
 
 ## Development Workflow
 
@@ -96,4 +104,4 @@ All changes must undergo peer review; Security and architecture compliance verif
 
 All development must comply with this constitution; Amendments require formal approval process; Code reviews must verify constitution compliance; Deviations require explicit exception approval.
 
-**Version**: 1.0.0 | **Ratified**: 2026-01-09 | **Last Amended**: 2026-01-09
+**Version**: 1.2.0 | **Ratified**: 2026-01-09 | **Last Amended**: 2026-01-24
